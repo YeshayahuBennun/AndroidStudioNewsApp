@@ -7,6 +7,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
             val stringRequest =
                 StringRequest(Request.Method.GET, url, { response ->
                     response
+                    extractJSON(response)
                 },
                     { error ->
                         error
@@ -36,5 +38,23 @@ class MainActivity : AppCompatActivity() {
         val pageSize = 10
 
         return "https://content.guardianapis.com/$word?page=$pageNumber&page-size=$pageSize&api-key=$apiKey"
+    }
+
+    private fun extractJSON(response:String){
+
+        val jsonObject = JSONObject(response)
+        val jsonResponseBody = jsonObject.getJSONObject("response")
+        val results = jsonResponseBody.getJSONArray("results")
+
+        val list = mutableListOf<Data>()
+
+        for(i in 0..9){
+            val item = results.getJSONObject(i)
+            val webTitle = item.getString("webTitle")
+            val webUrl = item.getString("webUrl")
+            val data = Data(webTitle,webUrl)
+            list.add(data)
+        }
+
     }
 }

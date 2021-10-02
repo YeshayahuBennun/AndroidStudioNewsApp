@@ -1,3 +1,3 @@
 package com.ybennun.newsapp
 
-data class Data(val news:String,val path:String)
+data class Data(val webTitle:String,val webUrl:String)
