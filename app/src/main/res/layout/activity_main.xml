@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/the_guardian_background"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_eight"
@@ -22,34 +23,34 @@
 
 
         <EditText
+            android:id="@+id/search_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_eight"
             android:background="@drawable/edit_text_border"
             android:hint="@string/edit_text_string"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:padding="@dimen/padding_eight"
+            android:padding="@dimen/padding_sixteen"
             android:textStyle="bold" />
 
 
     </LinearLayout>
 
 
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_layout"
+        android:layout_marginBottom="60dp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_eight"
-            android:layout_marginRight="@dimen/margin_eight"
-            android:layout_marginBottom="@dimen/margin_two"
-            android:text="@string/button_load_more"
-            android:textColor="@color/black" />
-    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_eight"
+        android:text="@string/button_load_more"
+        android:textColor="@color/black" />
 
 
-</LinearLayout>
+</RelativeLayout>
