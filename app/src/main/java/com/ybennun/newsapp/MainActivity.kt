@@ -2,6 +2,7 @@ package com.ybennun.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -21,11 +22,16 @@ class MainActivity : AppCompatActivity() {
 
             val stringRequest =
                 StringRequest(Request.Method.GET, url, { response ->
-                    response
-                    extractJSON(response)
+
+                    try {
+
+                        extractJSON(response)
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
                 },
                     { error ->
-                        error
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                     })
             queue.add(stringRequest)
         }
@@ -37,10 +43,10 @@ class MainActivity : AppCompatActivity() {
         val pageNumber = 1
         val pageSize = 10
 
-        return "https://content.guardianapis.com/$word?page=$pageNumber&page-size=$pageSize&api-key=$apiKey"
+        return "https://content.guardianapis.com/search?page=$pageNumber&page-size=$pageSize&q=$word&api-key=$apiKey"
     }
 
-    private fun extractJSON(response:String){
+    private fun extractJSON(response: String) {
 
         val jsonObject = JSONObject(response)
         val jsonResponseBody = jsonObject.getJSONObject("response")
@@ -48,13 +54,15 @@ class MainActivity : AppCompatActivity() {
 
         val list = mutableListOf<Data>()
 
-        for(i in 0..9){
+        for (i in 0..9) {
             val item = results.getJSONObject(i)
             val webTitle = item.getString("webTitle")
             val webUrl = item.getString("webUrl")
-            val data = Data(webTitle,webUrl)
+            val data = Data(webTitle, webUrl)
             list.add(data)
         }
 
+        val adapter = NewsAdapter(list)
+        list_view.adapter = adapter
     }
 }
