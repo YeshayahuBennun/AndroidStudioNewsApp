@@ -1,29 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_tex_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="12">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_25"
-        android:layout_weight="11"
-        android:gravity="center"
-        android:layout_margin="@dimen/margin_sixteen"
-        tools:text="1"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/ic_arrow_right"
-        android:contentDescription="@string/image_view_desc"/>
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_eight"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/margin_twenty"
+    app:drawableEndCompat="@drawable/ic_arrow_right"
+    app:drawbleRightCompat="@drawable/ic_arrow_right"
+    tools:text="@string/srt_tools_web_title" />
 
 
-</LinearLayout>
+
+

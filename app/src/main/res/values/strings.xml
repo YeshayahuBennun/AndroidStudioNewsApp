@@ -4,4 +4,5 @@
     <string name="button_load_more">LOAD MORE</string>
     <string name="edit_text_string">search your topic</string>
     <string name="image_view_desc">click to play audio</string>
+    <string name="srt_tools_web_title">news title</string>
 </resources>
