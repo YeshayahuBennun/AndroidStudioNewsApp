@@ -11,36 +11,27 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
+    private var pageNumber = 1
+    private var list = mutableListOf<Data>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         search_button.setOnClickListener {
-            val url = getUrl()
+            list = mutableListOf()
+            sendRequest()
+        }
 
-            val queue = Volley.newRequestQueue(this)
-
-            val stringRequest =
-                StringRequest(Request.Method.GET, url, { response ->
-
-                    try {
-
-                        extractJSON(response)
-                    } catch (exception: Exception) {
-                        exception.printStackTrace()
-                    }
-                },
-                    { error ->
-                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
-                    })
-            queue.add(stringRequest)
+        load_more_button.setOnClickListener {
+            pageNumber += pageNumber
+            sendRequest()
         }
     }
 
     private fun getUrl(): String {
         val word = search_edit_text.text
         val apiKey = "1a2c32c2-1bb4-458c-b336-c9b827dd9788"
-        val pageNumber = 1
         val pageSize = 10
 
         return "https://content.guardianapis.com/search?page=$pageNumber&page-size=$pageSize&q=$word&api-key=$apiKey"
@@ -52,8 +43,6 @@ class MainActivity : AppCompatActivity() {
         val jsonResponseBody = jsonObject.getJSONObject("response")
         val results = jsonResponseBody.getJSONArray("results")
 
-        val list = mutableListOf<Data>()
-
         for (i in 0..9) {
             val item = results.getJSONObject(i)
             val webTitle = item.getString("webTitle")
@@ -64,5 +53,25 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = NewsAdapter(list)
         list_view.adapter = adapter
+    }
+
+    private fun sendRequest() {
+        val url = getUrl()
+        val queue = Volley.newRequestQueue(this)
+
+        val stringRequest =
+            StringRequest(Request.Method.GET, url, { response ->
+
+                try {
+
+                    extractJSON(response)
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+            },
+                { error ->
+                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+                })
+        queue.add(stringRequest)
     }
 }
